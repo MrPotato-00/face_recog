@@ -17,7 +17,7 @@ def append_to_excel():
                 class_= val[0]
                 section_= val[1]
 
-                curr.execute('select Rollno, time from attendance where Class= ? and Section=?', (class_, section_))
+                curr.execute('select Roll No, time from attendance where Class= ? and Section=?', (class_, section_))
                 response= list(curr.fetchall())
                 
                 df= pd.read_excel(filename)
@@ -65,6 +65,14 @@ def create_database():
     conn.commit()
     conn.close()
 
-show_data()
+def reset_db():
+     conn= sqlite3.connect("database.db")
+     curr= conn.cursor()
 
+     curr.execute("drop from attendance")
+     conn.commit()
+     conn.close()
+     print("\nDatabase cleared successfully...\n")
+
+#show_data()
 
